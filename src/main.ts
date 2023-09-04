@@ -1,4 +1,5 @@
 import { invoke } from "@tauri-apps/api/tauri";
+import { appWindow } from "@tauri-apps/api/window";
 
 let greetInputEl: HTMLInputElement | null;
 let greetMsgEl: HTMLElement | null;
@@ -13,6 +14,10 @@ async function greet() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  appWindow.listen("tauri://file-drop", ({ event, payload }) => {
+    console.log(event, payload);
+  })
+
   greetInputEl = document.querySelector("#greet-input");
   greetMsgEl = document.querySelector("#greet-msg");
   document.querySelector("#greet-form")?.addEventListener("submit", (e) => {
